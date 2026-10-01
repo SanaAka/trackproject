@@ -74,7 +74,7 @@ function handleScannedCode(scannedText) {
   const raw = String(scannedText || '').trim();
   if (!raw) return;
 
-  // sounds.playScanBeep();
+  // // sounds.playScanBeep();
 
   // 1. If scanning Employee ID for Borrow Modal
   if (scannerTarget === 'borrow-eid') {
