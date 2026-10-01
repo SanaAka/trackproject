@@ -2,7 +2,7 @@ import './style.css';
 import confetti from 'canvas-confetti';
 import { Chart, registerables } from 'chart.js';
 import { db, normalizeIngenicoSerial, getDefaultBundledProducts } from './storage.js';
-import { sounds } from './audio.js';
+// import { sounds } from './audio.js';
 import { Icons } from './icons.js';
 import { scannerManager } from './scanner.js';
 import { generateBarcodeSvg, getQrCodeImageUrl } from './labelGenerator.js';
@@ -74,7 +74,7 @@ function handleScannedCode(scannedText) {
   const raw = String(scannedText || '').trim();
   if (!raw) return;
 
-  sounds.playScanBeep();
+  // sounds.playScanBeep();
 
   // 1. If scanning Employee ID for Borrow Modal
   if (scannerTarget === 'borrow-eid') {
@@ -124,7 +124,7 @@ function handleScannedCode(scannedText) {
   // 4. Double-Scan Stock-In: Step 1 (Scan SKU)
   if (scannerTarget === 'stockin-sku') {
     pendingStockinSku = raw.toUpperCase().replace(/\s+/g, '-');
-    sounds.playSuccessChime();
+    // sounds.playSuccessChime();
     scannerTarget = 'stockin-sn';
     openScannerModal('stockin-sn');
     return;
@@ -147,7 +147,7 @@ function handleScannedCode(scannedText) {
         brand: 'Ingenico',
         status: 'AVAILABLE'
       });
-      sounds.playSuccessChime();
+      // sounds.playSuccessChime();
       confetti({ particleCount: 75, spread: 70 });
       posPageScannedSn = sn;
       activeNav = 'pos';
@@ -155,7 +155,7 @@ function handleScannedCode(scannedText) {
       renderApp();
       alert(`✓ Smart Double-Scan Completed!\n\n1. SKU: ${sku}\n2. S/N: ${sn}\n\nIngenico terminal successfully registered into fleet with bundled accessories!`);
     } catch (err) {
-      sounds.playWarningBuzz();
+      // sounds.playWarningBuzz();
       alert(err.message);
       closeModal();
     }
