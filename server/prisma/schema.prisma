@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url = env("DATABASE_URL")
+}
+
+enum Role {
+  STAFF
+  ADMIN
+}
+
+enum DeviceModel {
+  DX8000
+  A8
+  T6
+}
+
+enum DeviceState {
+  IN_STOCK
+  BORROWED
+  IN_REPAIR
+  RETIRED
+}
+
+enum EventType {
+  STOCK_IN
+  BORROW
+  RETURN
+  STATE_CHANGE
+  IMPORT
+}
+
+model Branch {
+  id Int @id @default(autoincrement())
+  name String @unique
+  staff Staff[]
+  borrows Borrow[]
+}
+
+model Staff {
+  id Int @id @default(autoincrement())
+  employeeId String @unique
+  name String
+  branchId Int
+  role Role @default(STAFF)
+  pinHash String
+  active Boolean @default(true)
+  failedAttempts Int @default(0)
+  lockedUntil DateTime?
+  branch Branch @relation(fields: [branchId], references: [id])
+  borrows Borrow[]
+  events DeviceEvent[]
+}
+
+model Device {
+  id Int @id @default(autoincrement())
+  model DeviceModel
+  serial String @unique
+  assetCode String? @unique
+  state DeviceState @default(IN_STOCK)
+  stockInDate DateTime?
+  remark String?
+  statusText String?
+  merchantName String?
+  sortNo Int
+  borrows Borrow[]
+  events DeviceEvent[]
+  @@index([model, sortNo])
+}
+
+model Borrow {
+  id Int @id @default(autoincrement())
+  deviceId Int
+  staffId Int
+  branchId Int
+  borrowedAt DateTime
+  returnedAt DateTime?
+  returnedBy Int?
+  condition String?
+  notes String?
+  device Device @relation(fields: [deviceId], references: [id])
+  staff Staff @relation(fields: [staffId], references: [id])
+  branch Branch @relation(fields: [branchId], references: [id])
+}
+
+model DeviceEvent {
+  id Int @id @default(autoincrement())
+  deviceId Int
+  type EventType
+  at DateTime
+  staffId Int?
+  detail String?
+  device Device @relation(fields: [deviceId], references: [id])
+  staff Staff? @relation(fields: [staffId], references: [id])
+}
+
+model MonthSnapshot {
+  id Int @id @default(autoincrement())
+  month String
+  model DeviceModel
+  inStock Int
+  out Int
+  total Int
+  createdAt DateTime @default(now())
+  @@unique([month, model])
+}
+
+model AuditLog {
+  id Int @id @default(autoincrement())
+  who Int?
+  action String
+  entity String
+  before String?
+  after String?
+  at DateTime @default(now())
+}

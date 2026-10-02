@@ -2,7 +2,7 @@ import './style.css';
 import confetti from 'canvas-confetti';
 import { Chart, registerables } from 'chart.js';
 import { db, normalizeIngenicoSerial, getDefaultBundledProducts } from './storage.js';
-// import { sounds } from './audio.js';
+import { sounds } from './audio.js';
 import { Icons } from './icons.js';
 import { scannerManager } from './scanner.js';
 import { generateBarcodeSvg, getQrCodeImageUrl } from './labelGenerator.js';

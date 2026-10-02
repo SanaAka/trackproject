@@ -1,7 +1,7 @@
 // Advanced Industrial Barcode & QR Scanner Engine with Hardware Acceleration,
 // Native BarcodeDetector 60fps Loop, Dynamic Zoom, Torch Controls, and Macro Focus.
 import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode';
-// import { sounds } from './audio.js';
+import { sounds } from './audio.js';
 
 // Comprehensive industrial formats for Ingenico and retail hardware
 const SUPPORTED_FORMATS = [

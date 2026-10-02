@@ -3,17 +3,42 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "prisma:generate": "prisma generate --schema server/prisma/schema.prisma",
+    "prisma:push": "prisma db push --schema server/prisma/schema.prisma",
+    "import": "node server/import-cli.js",
+    "server": "node server/index.js",
+    "seed:admin": "node server/seed-admin.js"
   },
   "devDependencies": {
-    "vite": "^8.3.0"
+    "vite": "^8.3.0",
+    "vitest": "^5.0.3"
   },
   "dependencies": {
+    "@prisma/client": "6.19.0",
+    "bcrypt": "^6.0.0",
     "canvas-confetti": "^1.9.4",
     "chart.js": "^4.5.1",
-    "html5-qrcode": "^2.3.8"
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^18.0.5",
+    "exceljs": "^4.4.0",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "html5-qrcode": "^2.3.8",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.4.0",
+    "node-cron": "^4.6.0",
+    "prisma": "6.19.0",
+    "zod": "^4.6.5"
   }
 }

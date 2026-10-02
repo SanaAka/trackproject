@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrackPOS Admin</title>
+    <link rel="stylesheet" href="/public/admin.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section id="login-view" class="panel login-panel">
+        <p class="eyebrow">TRACKPOS / TEAM ACCESS</p>
+        <h1>Admin sign in</h1>
+        <form id="login-form">
+          <label>Employee ID<input name="employeeId" autocomplete="username" required /></label>
+          <label>PIN<input name="pin" type="password" inputmode="numeric" autocomplete="current-password" required /></label>
+          <button type="submit">Sign in</button>
+          <p id="login-error" class="error" role="alert"></p>
+        </form>
+      </section>
+
+      <section id="admin-view" hidden>
+        <header class="topbar">
+          <div><p class="eyebrow">TRACKPOS / ADMIN</p><h1>Team directory</h1><p id="session-summary"></p></div>
+          <button id="logout-button" class="secondary">Sign out</button>
+        </header>
+        <div class="grid">
+          <section class="panel">
+            <div class="section-heading"><h2>Branches</h2><button id="refresh-branches" class="secondary">Refresh</button></div>
+            <form id="branch-form" class="inline-form"><input name="name" placeholder="Branch name" required /><button>Add branch</button></form>
+            <ul id="branch-list" class="records"></ul>
+          </section>
+          <section class="panel">
+            <div class="section-heading"><h2>Staff</h2><button id="refresh-staff" class="secondary">Refresh</button></div>
+            <form id="staff-form" class="staff-form">
+              <input name="employeeId" placeholder="Employee ID" required />
+              <input name="name" placeholder="Full name" required />
+              <select name="branchId" id="branch-select" required></select>
+              <select name="role"><option value="STAFF">Staff</option><option value="ADMIN">Admin</option></select>
+              <input name="pin" type="password" inputmode="numeric" placeholder="Initial PIN" minlength="4" required />
+              <button>Create staff</button>
+            </form>
+            <div id="staff-list" class="records"></div>
+          </section>
+        </div>
+        <p id="admin-status" class="status" role="status"></p>
+      </section>
+    </main>
+    <script src="/public/admin.js"></script>
+  </body>
+</html>
